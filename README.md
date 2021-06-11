@@ -1,6 +1,8 @@
 # GridConnect: A Distributed Renewable Energy Grid
 A distributed renewable energy grid that allows you to track, manage, and view energy sources and generation from sources such as solar and wind energy, as well as usage of the energy. Made during the Peel StemFest 2021 hackathon.
 
+![Example grid](https://user-images.githubusercontent.com/29025984/121750936-4a695e00-cadb-11eb-963f-b95384d7c9a9.png)
+
 ## Intro & Purpose
 As the world starts to realize the harm caused by relying on fossil fuels, it has become ever so important to leave the past and embrace renewable energy sources. However, because there are many types of renewable energy sources, it is important to unite all of these systems on a united platform. That's where GridConnect comes in.
 
