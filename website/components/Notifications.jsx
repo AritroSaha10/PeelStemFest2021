@@ -1,6 +1,6 @@
 import { Box, Heading, Flex, Text, Spacer, IconButton } from "@chakra-ui/react";
 import { WarningIcon, WarningTwoIcon, InfoIcon, CloseIcon } from "@chakra-ui/icons";
-import HeadingAndBox from "./HeaderAndBox";
+import HeadingAndBox from "./HeadingAndBox";
 import { useState } from "react";
 
 // Enum to represent how urgent a notification is
@@ -11,6 +11,7 @@ const notificationUrgency = {
     INFO: 3
 }
 
+// Notification box on the Overview page
 export default function Notifications({ pNotifications }) {
     // Freeze the enum to make sure it isn't changed
     Object.freeze(notificationUrgency);
@@ -21,6 +22,7 @@ export default function Notifications({ pNotifications }) {
     return (
         <HeadingAndBox heading="Notifications" width="70vw">
             {notifications.map(({ content, urgency }, idx) => (
+                // Notification code
                 <Flex flexDirection="row" alignItems="center" mb={4} key={content}>
                     {urgency === notificationUrgency.ERROR && <WarningIcon color="red.500" w={10} h={10} />}
                     {urgency === notificationUrgency.WARN && <WarningTwoIcon color="yellow.500" w={10} h={10} />}

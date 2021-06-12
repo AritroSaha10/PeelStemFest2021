@@ -5,6 +5,7 @@ import PieChart from "../components/graphs/PieChart";
 import { notificationUrgency } from "../components/Notifications";
 import { Box, Grid } from "@chakra-ui/layout";
 
+// All notifications, this would be fetched from the server
 const notifications = [
   {
     content: "Solar panel 1 has stopped working!",
@@ -20,6 +21,7 @@ const notifications = [
   }
 ];
 
+// Weekly energy generation data, this would be fetched from the server
 const weeklyEnergyGenerationData = {
   labels: ["May 22", "May 29", "June 5", "June 12"],
   datasets: [
@@ -33,6 +35,7 @@ const weeklyEnergyGenerationData = {
   ],
 };
 
+// Current energy generation from all sources, this would be fetched from the server
 const energyGenerationFromAllSources = {
   labels: ["Solar Energy (kWh)", "Wind Energy (kWh)", "Hydro Energy (kWh)", "Nuclear Energy (kWh)"],
   datasets: [

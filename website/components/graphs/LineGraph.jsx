@@ -1,6 +1,7 @@
 import { Line } from "react-chartjs-2";
-import HeadingAndBox from "../HeaderAndBox";
+import HeadingAndBox from "../HeadingAndBox";
 
+// Uses chart.js with a React wrapper
 export default function LineGraph({ data, title, height }) {
     return (
         <HeadingAndBox heading={title}>
