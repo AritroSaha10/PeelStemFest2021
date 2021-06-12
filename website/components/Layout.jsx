@@ -1,12 +1,13 @@
-import { Flex, Box } from "@chakra-ui/react";
-import Sidebar from "../components/sidebar";
+import { Flex, Box, Heading } from "@chakra-ui/react";
+import Sidebar from "./Sidebar";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, name }) => {
     return (
-        <Flex height="100vh" width="100vw" direction="row" background="gray.100">
+        <Flex height="100vh" width="100vw" direction="row" background="gray.300">
             <Sidebar />
-            <Flex height="100vh" backgroundColor="blue.100" flex="1">
-                <Box p={7}>
+            <Flex height="100vh" flex="1">
+                <Box pt={5} pl={10}>
+                    <Heading size="xl" mb={10}>{name}</Heading>
                     {children}
                 </Box>
             </Flex>

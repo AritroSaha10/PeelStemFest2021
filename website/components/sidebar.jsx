@@ -37,9 +37,17 @@ export default function Sidebar() {
 
             <Flex flexDirection="column" justifyContent="flex-start" w="270px">
                 {
-                    items.map(({ name, link, icon, current }) =>
-                        <Link href={link}>
-                            <Flex flexDirection="row" alignItems="center" p={2} mb={2} as="button" backgroundColor={router.pathname === link ? "gray.300" : ""} borderRadius="10px">
+                    items.map(({ name, link, icon }) =>
+                        <Link href={link} key={name}>
+                            <Flex 
+                                flexDirection="row" 
+                                alignItems="center" 
+                                p={2} 
+                                mb={2} 
+                                as="button" 
+                                backgroundColor={router.pathname === link ? "gray.300" : ""} 
+                                borderRadius="10px"
+                            >
                                 {icon}
                                 <Text fontSize="xl" color="gray.700" ml={5} alignSelf="center">{name}</Text>
                             </Flex>
