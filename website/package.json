@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^1.6.3",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
+    "chart.js": "^3.3.2",
     "firebase": "^8.6.7",
     "framer-motion": "^4.1.17",
     "luxon": "^1.27.0",
