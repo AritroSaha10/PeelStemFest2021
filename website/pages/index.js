@@ -11,7 +11,7 @@ import db from "../util/db";
 import { Box, Grid } from "@chakra-ui/layout";
 import { DateTime } from "luxon";
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   // Get reference and snapshot to weekly generation data
   const wegRef = db.collection("data").doc("weekly").collection("generation").orderBy("date");
   const wegQSnapshot = await wegRef.get();
@@ -96,6 +96,8 @@ export async function getServerSideProps(context) {
   notifSnapshot.forEach((doc) => {
     notifData.push(doc.data()); // Layout in database matches layout required
   });
+
+  notifData.sort((a, b) => a.urgency - b.urgency); // Sort by urgency
 
   return {
     props: {

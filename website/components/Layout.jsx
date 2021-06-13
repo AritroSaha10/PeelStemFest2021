@@ -1,5 +1,8 @@
 import { Flex, Box, Heading } from "@chakra-ui/react";
+import { Router } from "next/router";
+import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
+import { Skeleton } from "@chakra-ui/skeleton";
 
 const Layout = ({ children, name }) => {
     return (

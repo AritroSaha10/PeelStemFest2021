@@ -11,7 +11,7 @@ import db from "../util/db";
 import { Box, Grid } from "@chakra-ui/layout";
 import { DateTime } from "luxon";
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
     // Get reference and snapshot to weekly generation data
     const wegRef = db.collection("data").doc("weekly").collection("generation").orderBy("date");
     const wegQSnapshot = await wegRef.get();
@@ -96,7 +96,7 @@ export async function getServerSideProps(context) {
 export default function Generation({ generationData, generationRatios }) {
     return (
         <Layout name="Generation">
-        <Grid templateColumns="repeat(1, 1fr)" gap={10} width="70vw">
+        <Grid templateColumns="repeat(2, 1fr)" gap={10} width="70vw">
           <LineGraph title="Weekly Energy Generation" data={generationData} />
           <PieChart title="Energy Generation from All Sources" data={generationRatios} />
         </Grid>
