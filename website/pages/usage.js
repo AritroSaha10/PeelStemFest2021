@@ -1,52 +1,76 @@
-import { Grid } from "@chakra-ui/react";
-import LineGraph from "../components/graphs/LineGraph";
 import Layout from "../components/Layout";
 import UsageOrderedList from "../components/UsageOrderedList";
+import LineGraph from "../components/graphs/LineGraph";
 
-// Data of all users, as well as their addresses and weekly usage
-const users = [
-    {
-        name: "John Smith",
-        weeklyUsage: 10620, // in kWh
-        address: "1234 Somewhere Street",
-        restricted: false
-    },
-    {
-        name: "Jane Smith",
-        weeklyUsage: 9302, // in kWh
-        address: "4321 Someplace Drive",
-        restricted: true
-    },
-    {
-        name: "Jack Smith",
-        weeklyUsage: 21032, // in kWh
-        address: "9302-832 Place Road",
-        restricted: true
+import db from "../util/db";
+
+import { Grid } from "@chakra-ui/react";
+import { DateTime } from "luxon";
+
+export async function getServerSideProps(context) {
+    // Get reference and snapshot to weekly generation data
+    const wegRef = db.collection("data").doc("weekly").collection("generation").orderBy("date");
+    const wegQSnapshot = await wegRef.get();
+
+    // Has to be in this format for chart.js
+    let generationData = {
+        labels: [],
+        datasets: [
+            {
+                label: 'Energy Generated (kWh)',
+                data: [],
+                fill: false,
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgba(255, 99, 132, 0.2)',
+            },
+        ],
+    };
+
+    // Get data from snapshot
+    wegQSnapshot.forEach((doc) => {
+        const data = doc.data();
+
+        // Turn unix timestamp to something like "May 23"
+        const label = DateTime.fromMillis(data.date.seconds * 1000).toFormat("LLL dd");
+        const generated = data.energyGenerated;
+
+        // Push to global data
+        generationData.labels.push(label);
+        generationData.datasets[0].data.push(generated);
+    }); 
+
+
+    // Get notifications from server
+    const userDataRef = db.collection("users");
+    const userDataSnapshot = await userDataRef.get();
+
+    // Data format for other components
+    let userData = [];
+
+    // Get data from snapshot
+    userDataSnapshot.forEach((doc) => {
+        userData.push({
+            id: doc.id,
+            ...doc.data()
+        }); // Layout in database matches layout required
+    });
+
+    return {
+        props: {
+            generationData,
+            userData
+        }
     }
-];
+}
 
-// Weekly energy usage data, this would be fetched from the server
-const weeklyEnergyUsageData = {
-    labels: ["May 22", "May 29", "June 5", "June 12"],
-    datasets: [
-      {
-        label: 'Energy Used (kWh)',
-        data: [48930, 46938, 41932, 40954],
-        fill: false,
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgba(255, 99, 132, 0.2)',
-      },
-    ],
-  };
-
-export default function Usage() {
-    users.sort((a, b) => b.weeklyUsage - a.weeklyUsage); // Sort by weekly usage (descending)
+export default function Usage({ generationData, userData }) {
+    userData.sort((a, b) => b.weeklyUsage - a.weeklyUsage); // Sort by weekly usage (descending)
 
     return (
         <Layout name="Usage">
-            <UsageOrderedList data={users} />
+            <UsageOrderedList data={userData} />
             <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-                <LineGraph title="Weekly Energy Usage" data={weeklyEnergyUsageData} />
+                <LineGraph title="Weekly Energy Usage" data={generationData} />
             </Grid>
         </Layout>
     )

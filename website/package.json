@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.3.0",
     "firebase": "^8.6.7",
     "framer-motion": "^4.1.17",
+    "luxon": "^1.27.0",
     "next": "10.2.3",
     "react": "17.0.2",
     "react-chartjs-2": "^3.0.3",
